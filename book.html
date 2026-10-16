@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Date — GlamLove Salon By Maritza</title>
+<meta name="description" content="Check availability, build your beauty estimate, and send your booking request to GlamLove Salon By Maritza.">
+<link rel="icon" type="image/png" href="images/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="images/favicon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/booking.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><img src="images/nav-logo.png" alt="GlamLove Salon by Maritza" class="brand-logo"></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="bridal.html">Bridal</a>
+      <a href="special-projects.html">Special Projects</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="faq.html">FAQ</a>
+      <a href="book.html" class="nav-cta active">Book Your Date</a>
+    </nav>
+    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-panel">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="bridal.html">Bridal</a>
+  <a href="special-projects.html">Special Projects</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="reviews.html">Reviews</a>
+  <a href="faq.html">FAQ</a>
+  <a href="policies.html">Policies</a>
+  <a href="book.html" class="btn btn-primary">Book Your Date</a>
+</div>
+
+<main id="main">
+<section class="booking-shell">
+  <div class="container">
+
+    <div class="booking-head reveal in">
+      <p class="eyebrow" style="justify-content:center;">Book Your Date</p>
+      <h1 style="margin-top:14px;">Check My Wedding Date</h1>
+      <p style="margin-top:16px;">Selecting a date starts a booking request — it does not confirm your reservation. Maritza will follow up to finalize scheduling, and your date is officially reserved once the 30% deposit is received.</p>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-step active" data-step="1"><div class="dot">1</div><span class="label">Date</span></div>
+      <div class="progress-line"></div>
+      <div class="progress-step" data-step="2"><div class="dot">2</div><span class="label">Services</span></div>
+      <div class="progress-line"></div>
+      <div class="progress-step" data-step="3"><div class="dot">3</div><span class="label">Event</span></div>
+      <div class="progress-line"></div>
+      <div class="progress-step" data-step="4"><div class="dot">4</div><span class="label">Details</span></div>
+      <div class="progress-line"></div>
+      <div class="progress-step" data-step="5"><div class="dot">5</div><span class="label">Review</span></div>
+      <div class="progress-line"></div>
+      <div class="progress-step" data-step="6"><div class="dot">6</div><span class="label">Confirm</span></div>
+    </div>
+
+    <form id="bookingForm" class="booking-panel" action="https://formspree.io/f/xrpernqo" method="POST" novalidate>
+      <input type="hidden" name="_subject" id="fs_subject" value="New GlamLove Booking Request">
+      <input type="hidden" name="requestType" id="fs_requestType" value="Standard Calendar Date">
+      <input type="hidden" name="servicesSummary" id="fs_services" value="">
+      <input type="hidden" name="estimatedTotal" id="fs_estimatedTotal" value="$0">
+      <input type="hidden" name="referencePhotosCount" id="fs_photosCount" value="0">
+
+      <!-- STEP 1 — DATE -->
+      <div class="step-pane active" data-pane="1">
+        <p class="step-num">Step 01</p>
+        <h3 class="step-title">Availability &amp; Date Request</h3>
+        <p class="step-sub">View open dates on Maritza's calendar or submit a special date request subject to prior approval.</p>
+
+        <!-- APPROVAL WORKFLOW NOTICE BANNER -->
+        <div class="approval-system-banner">
+          <div class="as-header">
+            <span class="policy-badge" style="background:var(--gold); color:#fff;">✦ Prior Approval Required</span>
+            <h4>Artist Approval &amp; Reservation Request System</h4>
+          </div>
+          <p>To ensure dedicated attention and seamlessly coordinate travel times, party sizes, and assistant artists across Arizona, <strong>every selected date is submitted as a Priority Booking Request</strong>. Maritza personally reviews and approves every inquiry before the date is finalized and the standard 30% deposit is collected.</p>
+        </div>
+
+        <div class="cal-wrap">
+          <div class="cal-nav">
+            <button type="button" id="calPrev" aria-label="Previous month">‹</button>
+            <span class="month-label" id="calMonthLabel"></span>
+            <button type="button" id="calNext" aria-label="Next month">›</button>
+          </div>
+          <div class="cal-grid-labels">
+            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <p id="calSourceNote" class="cal-source-note"></p>
+          <div class="cal-legend">
+            <span><i class="leg-available"></i>Open / Available</span>
+            <span><i class="leg-unavailable"></i>Closed (Special Request)</span>
+            <span><i class="leg-booked"></i>Booked</span>
+            <span><i class="leg-selected"></i>Selected</span>
+          </div>
+          <div style="text-align:center; margin-top:16px;">
+            <button type="button" class="btn btn-ghost btn-sm" id="toggleGcalEmbedBtn" style="font-size:12px; padding:6px 16px;">✦ View Official Live Google Calendar</button>
+          </div>
+          <div id="gcalEmbedDrawer" style="display:none; margin-top:20px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); box-shadow:0 12px 30px -15px rgba(43,37,34,.15);">
+            <iframe src="https://calendar.google.com/calendar/embed?src=casaemma123456%40gmail.com&ctz=America%2FPhoenix" style="border:0" width="100%" height="480" frameborder="0" scrolling="no"></iframe>
+          </div>
+        </div>
+
+        <div class="selected-date-banner" id="selectedDateBanner">
+          You have selected <strong id="selectedDateText"></strong>. <span id="selectedDateText2"></span>
+        </div>
+
+        <div class="step-actions">
+          <span></span>
+          <button type="button" class="btn btn-primary" id="toStep2" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 — SERVICES -->
+      <div class="step-pane" data-pane="2">
+        <p class="step-num">Step 02</p>
+        <h3 class="step-title">Build Your Beauty Estimate</h3>
+        <p class="step-sub">Add everyone who needs hair and/or makeup. Your estimate updates automatically.</p>
+
+        <div id="serviceList"></div>
+
+        <div class="group-warning" id="groupWarning">Your bridal party may require additional artists depending on your schedule. Maritza will confirm the best setup for your event.</div>
+
+        <div class="estimate-box">
+          <div id="estimateLines"></div>
+          <div class="estimate-total">
+            <span class="t-label">Estimated Services Total</span>
+            <span class="t-amount" id="estimateTotal">$0</span>
+          </div>
+          <p class="estimate-note">This is an estimated service total and is not a final quote. Additional travel, early start, additional artist, holiday or other applicable fees may apply.</p>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-ghost" data-back="1">Back</button>
+          <button type="button" class="btn btn-primary" id="toStep3">Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 — EVENT & TIMELINE -->
+      <div class="step-pane" data-pane="3">
+        <p class="step-num">Step 03</p>
+        <h3 class="step-title">Your Event</h3>
+        <p class="step-sub">Help Maritza understand the shape of your day.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="eventType">Event Type</label>
+            <select id="eventType" name="eventType">
+              <option value="Wedding">Wedding</option>
+              <option value="Elopement">Elopement</option>
+              <option value="Quinceañera">Quinceañera</option>
+              <option value="Photoshoot">Photoshoot</option>
+              <option value="Formal Event">Formal Event</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="eventDateDisplay">Wedding / Event Date</label>
+            <input type="text" id="eventDateDisplay" name="eventDate" readonly>
+          </div>
+          <div class="field">
+            <label for="venue">Venue</label>
+            <input type="text" id="venue" name="venue" placeholder="e.g. Secret Garden Event Venue">
+          </div>
+          <div class="field">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" placeholder="e.g. Glendale, AZ">
+          </div>
+          <div class="field full">
+            <label for="readyLocation">Getting-Ready Location</label>
+            <select id="readyLocation" name="gettingReadyLocation">
+              <option value="Home">Home</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Venue">Venue</option>
+              <option value="Event Hall">Event Hall</option>
+              <option value="Airbnb">Airbnb</option>
+              <option value="Bridal Suite">Bridal Suite</option>
+              <option value="Photography Studio">Photography Studio</option>
+            </select>
+          </div>
+        </div>
+
+        <h4 style="margin:36px 0 20px;">Timeline</h4>
+        <div class="form-grid">
+          <div class="field">
+            <label for="readyTime">Getting-Ready Time</label>
+            <input type="time" id="readyTime" name="gettingReadyTime">
+          </div>
+          <div class="field">
+            <label for="ceremonyTime">Ceremony Time</label>
+            <input type="time" id="ceremonyTime" name="ceremonyTime">
+          </div>
+          <div class="field">
+            <label for="photoTime">Photography Start Time</label>
+            <input type="time" id="photoTime" name="photographyStartTime">
+          </div>
+          <div class="field">
+            <label for="completeTime">Desired Completion Time</label>
+            <input type="time" id="completeTime" name="desiredCompletionTime">
+          </div>
+        </div>
+        <div class="notice" id="earlyStartNotice" style="display:none;">An early start fee may apply. Your final fee will be confirmed by GlamLove. Normal service begins around 7 AM — earlier starts are $50 per stylist.</div>
+
+        <h4 style="margin:36px 0 20px;">Travel &amp; Add-Ons</h4>
+        <div class="form-grid">
+          <div class="field">
+            <label for="travelZone">Travel Destination <span class="hint">(if outside Phoenix/Glendale)</span></label>
+            <select id="travelZone" name="travelDestination">
+              <option value="none">Local — Phoenix / Glendale area</option>
+              <option value="sedona">Sedona (+$200)</option>
+              <option value="prescott">Prescott (+$250)</option>
+              <option value="tucson">Tucson (+$250)</option>
+              <option value="flagstaff">Flagstaff (+$350)</option>
+              <option value="other">Other destination (quoted individually)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="touchUpHours">Touch-Up Hours <span class="hint">($150/hr, optional)</span></label>
+            <input type="number" id="touchUpHours" name="touchUpHours" min="0" max="12" value="0">
+          </div>
+          <div class="field">
+            <label for="assistants">Assistants Needed <span class="hint">(+$50 each)</span></label>
+            <input type="number" id="assistants" name="assistantsNeeded" min="0" max="6" value="0">
+          </div>
+          <div class="field">
+            <label for="extraArtists">Additional Hair/Makeup Artists <span class="hint">(+$75 each)</span></label>
+            <input type="number" id="extraArtists" name="extraArtistsNeeded" min="0" max="6" value="0">
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-ghost" data-back="2">Back</button>
+          <button type="button" class="btn btn-primary" id="toStep4">Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 — YOUR DETAILS -->
+      <div class="step-pane" data-pane="4">
+        <p class="step-num">Step 04</p>
+        <h3 class="step-title">Your Information</h3>
+        <p class="step-sub">So Maritza knows who to follow up with.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="name" required>
+            <span class="error-msg">Please enter your name.</span>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error-msg">Please enter a valid email.</span>
+          </div>
+          <div class="field full">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required placeholder="(602) 555-0123">
+            <span class="error-msg">Please enter your phone number.</span>
+          </div>
+        </div>
+
+        <h4 style="margin:24px 0 10px;">Inspiration &amp; Reference Photos</h4>
+        <p style="font-size:13.5px; color:var(--espresso-soft); margin-bottom:16px;">Upload photos of the hairstyles, makeup looks, or wedding dress styles you love for your event (up to 5 reference photos).</p>
+
+        <div class="photo-dropzone-box" id="photoDropzone">
+          <div class="p-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <h4>Drag &amp; Drop or Browse Reference Photos</h4>
+          <p>JPG, PNG, or WEBP formats &middot; Maximum 5 images</p>
+          <button type="button" class="btn btn-outline btn-sm" id="photoUploadTrigger">Upload Inspiration Photos</button>
+          <input type="file" id="referencePhotosInput" accept="image/*" multiple style="display:none;">
+        </div>
+
+        <div class="reference-thumbs-row" id="referenceThumbsRow"></div>
+
+        <div class="whatsapp-helper-notice">
+          <div class="helper-icon">💡</div>
+          <div>
+            <strong>Sending Reference Photos on WhatsApp:</strong>
+            <p>Due to Meta/WhatsApp security and privacy guidelines, web browsers cannot automatically attach image binaries to an external web link. However, your reference photos are saved with your booking request, and when you click <em>Continue on WhatsApp</em>, you will be guided to send them directly to Maritza in chat with 1 tap.</p>
+          </div>
+        </div>
+
+        <h4 style="margin:30px 0 20px;">A Few Last Things</h4>
+        <div class="field full">
+          <label for="allergies">Do you have any known allergies or product sensitivities?</label>
+          <select id="allergies" name="allergies">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </div>
+        <div class="field full" id="allergyDetailField" style="display:none;">
+          <label for="allergyDetail">Please explain</label>
+          <textarea id="allergyDetail" name="allergyDetails"></textarea>
+        </div>
+        <div class="field full">
+          <label for="message">Tell us about your event</label>
+          <textarea id="message" name="message" placeholder="Share your vision, must-have details, or anything else Maritza should know."></textarea>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="photoConsent" name="photoConsent" value="Yes">
+          <label for="photoConsent">I'm open to GlamLove using photos from my event for portfolio and marketing purposes (optional — you can also decide later).</label>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-ghost" data-back="3">Back</button>
+          <button type="button" class="btn btn-primary" id="toStep5">Review Request</button>
+        </div>
+      </div>
+
+      <!-- STEP 5 — REVIEW -->
+      <div class="step-pane" data-pane="5">
+        <p class="step-num">Step 05</p>
+        <h3 class="step-title">Review Your Request</h3>
+        <p class="step-sub">Please confirm the details below before sending your request.</p>
+
+        <div class="confirm-summary" id="reviewSummary"></div>
+
+        <!-- POLICIES & TERMS SUMMARY CARD (REQUIRED FOR SUBMISSION) -->
+        <div class="policy-agreement-card">
+          <div class="policy-card-header">
+            <span class="policy-badge">✦ Important</span>
+            <h4>Policies &amp; Terms of Service</h4>
+          </div>
+          <p class="policy-intro">Before submitting, please review our core service terms. Full policy details are always accessible on our <a href="policies.html" target="_blank" rel="noopener">Policies Page</a>:</p>
+          <ul class="policy-bullets">
+            <li><strong>30% Non-Refundable Deposit:</strong> Required to secure and officially lock your date on Maritza's calendar. The remaining balance is due the day before your event.</li>
+            <li><strong>Cancellation &amp; Rescheduling:</strong> Cancellations must be made at least 30 days in advance. Deposits are non-refundable; date changes are subject to availability.</li>
+            <li><strong>Punctuality &amp; Schedule:</strong> A 15-minute grace period is provided. Beyond 15 minutes, a $10 fee per additional 15 minutes applies to protect your timeline.</li>
+            <li><strong>Travel &amp; Parking:</strong> Applicable travel fees are confirmed prior to deposit. Parking and hotel fees (if needed) are covered by the client.</li>
+          </ul>
+
+          <div class="check-row policy-check-row">
+            <input type="checkbox" id="policyConsent" name="policyConsent" value="Yes" required>
+            <label for="policyConsent">
+              <strong>I have read and agree to GlamLove's <a href="policies.html" target="_blank" rel="noopener">Policies &amp; Terms of Service</a></strong>, including the 30% non-refundable deposit requirement, cancellation terms, and scheduling guidelines. <span class="req-star">*</span>
+            </label>
+          </div>
+          <p class="error-msg" id="policyConsentError" style="display:none; margin-top:8px; color:#c94a4a; font-weight:600;">You must read and agree to the Policies &amp; Terms of Service to submit your request.</p>
+        </div>
+
+        <div class="notice">Selecting an available date does not confirm your reservation. Your date is officially reserved once the required 30% deposit has been received.</div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-ghost" data-back="4">Back</button>
+          <button type="submit" class="btn btn-primary" id="submitBooking">Submit Booking Request</button>
+        </div>
+      </div>
+
+      <!-- STEP 6 — CONFIRMATION -->
+      <div class="step-pane" data-pane="6">
+        <div class="confirm-panel">
+          <div class="confirm-icon">✓</div>
+          <h3>We Received Your Request!</h3>
+          <p style="max-width:480px; margin:14px auto 0;">Your date is not officially reserved yet. Maritza will contact you to confirm your services, schedule and final details. Continue below to reach her directly.</p>
+
+          <div class="confirm-summary" id="finalSummary"></div>
+          <p id="emailStatus" class="email-status"></p>
+
+          <div class="confirm-actions">
+            <a href="#" id="whatsappBtn" target="_blank" rel="noopener" class="btn btn-wa">Continue on WhatsApp</a>
+            <a href="https://instagram.com/direct/inbox" target="_blank" rel="noopener" class="btn btn-outline">Continue on Instagram</a>
+          </div>
+          <p style="margin-top:30px;"><a href="index.html" style="text-decoration:underline; font-size:13px;">Return Home</a></p>
+        </div>
+
+        <!-- WHATSAPP PHOTO ATTACHMENT GUIDANCE MODAL -->
+        <div id="photoWhatsAppModal" class="photo-modal" style="display:none;">
+          <div class="photo-modal-content">
+            <div style="font-size:36px; margin-bottom:8px;">📸</div>
+            <h3>Send Your Reference Photos!</h3>
+            <p>Your booking request details and estimate are ready in your WhatsApp chat with Maritza. Follow these 2 easy steps to send her your inspiration photos:</p>
+            <ol class="photo-modal-steps">
+              <li>In your WhatsApp chat, tap the <strong>Paperclip 📎 or Camera 📷</strong> icon.</li>
+              <li>Select your reference photos from your gallery and tap <strong>Send</strong>.</li>
+            </ol>
+            <div class="modal-thumbs-preview" id="modalThumbsPreview"></div>
+            <div class="modal-actions">
+              <a href="#" id="modalDirectWaLink" target="_blank" rel="noopener" class="btn btn-primary" style="background:#25D366; border-color:#25D366; color:#fff;">Open WhatsApp Chat 💬</a>
+              <button type="button" class="btn btn-ghost" id="closePhotoModalBtn">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer" id="siteFooter">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo-link" aria-label="GlamLove Home">
+          <img src="images/logo-full.png" alt="GlamLove Salon by Maritza" class="footer-logo">
+        </a>
+        <p>Luxury bridal hair &amp; makeup based in Glendale, Arizona — Beauty. Confidence. Love. Serving brides throughout Arizona since 2009.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://wa.me/16232240331" aria-label="WhatsApp" target="_blank" rel="noopener" title="WhatsApp Concierge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="services.html">Services &amp; Pricing</a>
+        <a href="bridal.html">Bridal Experience</a>
+        <a href="special-projects.html">Special Projects</a>
+        <a href="gallery.html">Portfolio Gallery</a>
+        <a href="reviews.html">Client Reviews</a>
+        <a href="faq.html">FAQ</a>
+        <a href="policies.html">Policies &amp; Terms</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p class="footer-contact-link"><span class="contact-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4.5-5.2 7-8.8 7-12a7 7 0 1 0-14 0c0 3.2 2.5 6.8 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span> Glendale, AZ · On-Location</p>
+        <a href="tel:6232240331" class="footer-contact-link"><span class="contact-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> 623-224-0331</a>
+        <a href="mailto:mmaperez04@gmail.com" class="footer-contact-link"><span class="contact-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span> mmaperez04@gmail.com</a>
+        <p class="footer-contact-link"><span class="contact-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Mon – Sun · By Appointment</p>
+      </div>
+      <div class="footer-col footer-col-book">
+        <h4>Direct Concierge</h4>
+        <p>Questions about customized bridal packages, assistants, travel, or early starts?</p>
+        <a href="https://wa.me/16232240331" target="_blank" rel="noopener" class="btn-footer-gold">&#128172; Chat on WhatsApp</a>
+        <div class="footer-admin-link">
+          <a href="admin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Maritza&rsquo;s Dashboard</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span class="js-year"></span> GlamLove Salon By Maritza. All rights reserved.</p>
+      <p class="footer-locations">Glendale &middot; Phoenix &middot; Scottsdale &middot; Sedona &middot; Arizona</p>
+      <a href="#siteFooter" class="footer-back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">Back to top &uarr;</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/gcal.js"></script>
+<!-- Formspree endpoint handles direct delivery to Maritza -->
+<script src="js/main.js"></script>
+<script src="js/booking.js"></script>
+</body>
+</html>
